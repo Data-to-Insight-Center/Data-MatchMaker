@@ -46,7 +46,7 @@ echo "Generating java source code from " $1
 echo
 
 CP=:$CLASSPATH:$CLASSES:.
-java -classpath $CP edu.indiana.d2i.sead.matchmaker.core.POJOFactory $1
+java -classpath $CP edu.indiana.d2i.matchmaker.core.POJOFactory $1
 ' >> ./bin/codegen.sh
 chmod 755 ./bin/codegen.sh
 

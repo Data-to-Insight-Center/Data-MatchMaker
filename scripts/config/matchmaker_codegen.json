@@ -2,7 +2,7 @@
 {
 	"format": "./config/MatchmakerInputSchema.json",
 	"className":"MatchmakerInputSchema",
-	"packageName":"edu.indiana.d2i.sead.matchmaker.service.messaging",
+	"packageName":"edu.indiana.d2i.matchmaker.service.messaging",
 	"codeLocation":"./src/main/java"
 }
 ]

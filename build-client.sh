@@ -44,9 +44,9 @@ fi
 CP=:$CLASSPATH:$CLASSES:.
 if [ "$1" = "sync" ];
 then
-mainClass=edu.indiana.d2i.sead.matchmaker.client.SynchronizedClient
+mainClass=edu.indiana.d2i.matchmaker.client.SynchronizedClient
 else
-mainClass=edu.indiana.d2i.sead.matchmaker.client.AsynchronizedClient
+mainClass=edu.indiana.d2i.matchmaker.client.AsynchronizedClient
 fi
 java -classpath $CP $mainClass $2 $3
 

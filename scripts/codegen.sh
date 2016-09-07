@@ -5,7 +5,7 @@ cd scripts
 BUILD=$(pwd)
 CLASSES=$(pwd)
 SRC=$ROOT/src/main/java
-RESOURCES=$ROOT/src/main/resources/edu/indiana/d2i/sead/matchmaker/
+RESOURCES=$ROOT/src/main/resources/edu/indiana/d2i/matchmaker/
 
 echo
 echo "#########################################"
@@ -28,8 +28,8 @@ for i in $(ls $BUILD |grep ".jar"); do
 done
 
 CP=:$CLASSPATH:$CLASSES:.
-javac -classpath $CP -d $BUILD ../src/main/java/edu/indiana/d2i/sead/matchmaker/core/POJOFactory.java
-java -classpath $CP edu.indiana.d2i.sead.matchmaker.core.POJOFactory $SRC $RESOURCES
+javac -classpath $CP -d $BUILD ../src/main/java/edu/indiana/d2i/matchmaker/core/POJOFactory.java
+java -classpath $CP edu.indiana.d2i.matchmaker.core.POJOFactory $SRC $RESOURCES
 
 rm *.jar
 rm -rf edu

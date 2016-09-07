@@ -1,12 +1,12 @@
-package edu.indiana.d2i.sead.matchmaker.ruleset1
+package edu.indiana.d2i.matchmaker.ruleset1
  
-import edu.indiana.d2i.sead.matchmaker.core.*
+import edu.indiana.d2i.matchmaker.core.*
 import java.util.Set
 import java.util.HashSet
 import java.lang.*
 import java.util.Iterator
-import edu.indiana.d2i.sead.matchmaker.pojo.*;
-import edu.indiana.d2i.sead.matchmaker.custom.ruleset1.*;
+import edu.indiana.d2i.matchmaker.pojo.*;
+import edu.indiana.d2i.matchmaker.custom.ruleset1.*;
 
 
 declare enum Constants

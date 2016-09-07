@@ -51,7 +51,7 @@ echo "Listening for incoming messages..."
 echo
 
 CP=:$CLASSPATH:$CLASSES:.
-java -classpath $CP edu.indiana.d2i.sead.matchmaker.service.ServiceLauncher $1
+java -classpath $CP edu.indiana.d2i.matchmaker.service.ServiceLauncher $1
 ' >> ./bin/Matchmaker.sh
 chmod 755 ./bin/Matchmaker.sh
 
