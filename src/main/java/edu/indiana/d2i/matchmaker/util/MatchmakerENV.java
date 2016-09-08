@@ -38,8 +38,6 @@ public class MatchmakerENV {
 	 */
 	private PropertyReader property = null;
 	private String RuleJarProfilePath;
-	private String MatchmakerInputSchemaClassName;
-	private String MatchmakerOutputSchemaClassName;
 	private String CachedProfileRepositories;
 	private String CachedProfilePerson;
 	private String RepoPropertiesPath;
@@ -48,78 +46,30 @@ public class MatchmakerENV {
 		//this.property = PropertyReader.getInstance(propertiesPath);
 		this.property = property;
 		this.setRuleJarProfilePath(this.property.getProperty("matchmaker.rule.jar.properties.path"));
-		this.setMatchmakerInputSchemaClassName(this.property.getProperty("matchmaker.input.schema.class.name"));
-		this.setMatchmakerOutputSchemaClassName(this.property.getProperty("matchmaker.output.schema.class.name"));
 		this.setCachedProfileRepositories(this.property.getProperty("cached.profile.repositories"));
 		this.setCachedProfilePerson(this.property.getProperty("cached.profile.person"));
 		this.setRepoPropertiesPath(this.property.getProperty("repo.properties.path"));
-	};
-	public MatchmakerENV(String propertiesPath){
-		this.property = PropertyReader.getInstance(propertiesPath);
-		this.setRuleJarProfilePath(this.property.getProperty("matchmaker.rule.jar.properties.path"));
-		this.setMatchmakerInputSchemaClassName(this.property.getProperty("matchmaker.input.schema.class.name"));
-		this.setMatchmakerOutputSchemaClassName(this.property.getProperty("matchmaker.output.schema.class.name"));
-		this.setCachedProfileRepositories(this.property.getProperty("cached.profile.repositories"));
-		this.setCachedProfilePerson(this.property.getProperty("cached.profile.person"));
-		this.setRepoPropertiesPath(this.property.getProperty("repo.properties.path"));
-	};
-	public MatchmakerENV(String RuleJarProfilePath, String MatchmakerInputSchemaClassName, String MatchmakerOutputSchemaClassName, String CachedProfileRepositories, String CachedProfilePerson, String RepoPropertiesPath){
-		this.setRuleJarProfilePath(RuleJarProfilePath);
-		this.setMatchmakerInputSchemaClassName(MatchmakerInputSchemaClassName);
-		this.setMatchmakerOutputSchemaClassName(MatchmakerOutputSchemaClassName);
-		this.setCachedProfileRepositories(CachedProfileRepositories);
-		this.setCachedProfilePerson(CachedProfilePerson);
-		this.setRepoPropertiesPath(RepoPropertiesPath);
-	};
-	public MatchmakerENV(MatchmakerENV env){
-		this.setRuleJarProfilePath(env.getRuleJarProfilePath());
-		this.setMatchmakerInputSchemaClassName(env.getMatchmakerInputSchemaClassName());
-		this.setMatchmakerOutputSchemaClassName(env.getMatchmakerOutputSchemaClassName());
-		this.setCachedProfileRepositories(env.getCachedProfileRepositories());
-		this.setCachedProfilePerson(env.getCachedProfilePerson());
-		this.setRepoPropertiesPath(env.getRepoPropertiesPath());
-
-	};
-	
-	public void	setRuleJarProfilePath(String RuleJarProfilePath){
-		this.RuleJarProfilePath=RuleJarProfilePath;
-	};
-	public String getRuleJarProfilePath(){
-		return this.RuleJarProfilePath;
-	};
-	public void	setMatchmakerInputSchemaClassName(String MatchmakerInputSchemaClassName){
-		this.MatchmakerInputSchemaClassName=MatchmakerInputSchemaClassName;
-	};
-	public String getMatchmakerInputSchemaClassName(){
-		return this.MatchmakerInputSchemaClassName;
-	};
-	public void	setMatchmakerOutputSchemaClassName(String MatchmakerOutputSchemaClassName){
-		this.MatchmakerOutputSchemaClassName=MatchmakerOutputSchemaClassName;
-	};
-	public String getMatchmakerOutputSchemaClassName(){
-		return this.MatchmakerOutputSchemaClassName;
-	};
-	public void	setCachedProfileRepositories(String CachedProfileRepositories){
-		this.CachedProfileRepositories=CachedProfileRepositories;
-	};
-	public String getCachedProfileRepositories(){
-		return this.CachedProfileRepositories;
-	};
-	public void	setCachedProfilePerson(String CachedProfilePerson){
-		this.CachedProfilePerson=CachedProfilePerson;
-	};
-	public String getCachedProfilePerson(){
-		return this.CachedProfilePerson;
-	};
-	public void	setRepoPropertiesPath(String RepoPropertiesPath){
-		this.RepoPropertiesPath=RepoPropertiesPath;
-	};
-	public String getRepoPropertiesPath(){
-		return this.RepoPropertiesPath;
-	};
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
+	public void	setRuleJarProfilePath(String RuleJarProfilePath){
+		this.RuleJarProfilePath=RuleJarProfilePath;
+	}
+	public String getRuleJarProfilePath(){
+		return this.RuleJarProfilePath;
+	}
+	public void	setCachedProfileRepositories(String CachedProfileRepositories){
+		this.CachedProfileRepositories=CachedProfileRepositories;
+	}
+	public String getCachedProfileRepositories(){
+		return this.CachedProfileRepositories;
+	}
+	public void	setCachedProfilePerson(String CachedProfilePerson){
+		this.CachedProfilePerson=CachedProfilePerson;
+	}
+	public String getCachedProfilePerson(){
+		return this.CachedProfilePerson;
+	}
+	public void	setRepoPropertiesPath(String RepoPropertiesPath){
+		this.RepoPropertiesPath=RepoPropertiesPath;
+	}
 }

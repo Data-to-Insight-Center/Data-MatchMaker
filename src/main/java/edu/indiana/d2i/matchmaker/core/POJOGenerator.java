@@ -33,7 +33,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 
 
 public class POJOGenerator {
@@ -134,26 +133,4 @@ public class POJOGenerator {
 			return obj;
 		}
 	}
-	
-	public static void main(String[] args) throws JsonProcessingException, IOException, ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-/*
-		// TODO Auto-generated method stub
-		POJOGenerator repositories = new POJOGenerator("edu.indiana.d2i.sead.matchmaker.pojo.Repository");
-		repositories.fromPath("C:\\Users\\yuanluo\\WorkZone\\workspace\\MatchMaker\\profile\\repositories.json");
-		POJOGenerator person = new POJOGenerator("edu.indiana.d2i.sead.matchmaker.pojo.Person");
-		person.fromPath("C:\\Users\\yuanluo\\WorkZone\\workspace\\MatchMaker\\profile\\person.json");
-		POJOGenerator researchObject=new POJOGenerator("edu.indiana.d2i.sead.matchmaker.pojo.ResearchObject");
-		researchObject.fromPath("C:\\Users\\yuanluo\\WorkZone\\workspace\\MatchMaker\\profile\\research_object.json");
-		
-		Object[] repos=(Object[]) repositories.generate();
-		for(Object repo: repos){
-			Class<?> classTypeRepository=Class.forName("edu.indiana.d2i.sead.matchmaker.pojo.Repository");
-			Object maxSize=classTypeRepository.cast(repo).getClass().getMethod("getMaxSize", null).invoke(repo);
-			Class<?> classTypeMaxSize=Class.forName("edu.indiana.d2i.sead.matchmaker.pojo.MaxSize");
-			Object value=classTypeMaxSize.cast(maxSize).getClass().getMethod("getValue", null).invoke(maxSize);
-			System.out.println(value.toString());
-		}
-*/		
-	}
-
 }

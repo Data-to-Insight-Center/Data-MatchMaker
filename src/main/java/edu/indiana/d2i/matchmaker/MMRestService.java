@@ -1,9 +1,8 @@
 package edu.indiana.d2i.matchmaker;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.sun.jersey.api.client.ClientResponse;
-import edu.indiana.d2i.matchmaker.core.POJOGenerator;
-import edu.indiana.d2i.matchmaker.service.MatchmakerOperations;
+import edu.indiana.d2i.matchmaker.drivers.MetaDriver;
+import edu.indiana.d2i.matchmaker.drivers.Query;
 import edu.indiana.d2i.matchmaker.util.MatchmakerENV;
 import edu.indiana.d2i.matchmaker.util.PropertyReader;
 import org.apache.log4j.Logger;
@@ -39,23 +38,19 @@ import java.util.regex.Pattern;
  */
 
 @Path("/rest")
-public class RestTest {
+public class MMRestService {
 
     private static PropertyReader propertyReader = null;
     private static MatchmakerENV env = null;
-    private static final Logger log = Logger.getLogger(RestTest.class);
-    private MatchmakerOperations mmOperations;
-    private POJOGenerator input;
+    private static final Logger log = Logger.getLogger(MMRestService.class);
     public static final String  PROCESSING_ERROR_STRING = "Processing Error";
 
-    public RestTest() throws ClassNotFoundException {
+    public MMRestService() throws ClassNotFoundException {
         propertyReader = PropertyReader.getInstance("matchmaker.properties");
-        PropertyConfigurator.configure(RestTest.class.getResourceAsStream(propertyReader.getProperty("log4j.properties.path")));
+        PropertyConfigurator.configure(MMRestService.class.getResourceAsStream(propertyReader.getProperty("log4j.properties.path")));
 
         if (log.isDebugEnabled()) log.debug("Matchmaker started");
         env = new MatchmakerENV(propertyReader);
-        this.mmOperations = new MatchmakerOperations();
-        input = new POJOGenerator(env.getMatchmakerInputSchemaClassName());
     }
 
     @GET
@@ -64,7 +59,7 @@ public class RestTest {
     public Response getRepositoryList() {
 
 
-        return Response.status(200).entity("{\"test\" : \"test123\"}").build();
+        return Response.status(200).entity("{\"response\" : \"MM Service is running!\"}").build();
 
     }
 
@@ -73,17 +68,11 @@ public class RestTest {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getMatchingRepositories(String roString) {
-        this.input.fromString(roString);
-        JsonNode requestMessageJsonNode=this.input.getJsonTree();
-        //String ResponseRoutingKey=requestMessageJsonNode.get("responseKey").asText();
-        JsonNode request=requestMessageJsonNode.get("request");
-        log.info("[Matchmaker server: Request] "+request);
-        //log.info("[Matchmaker server: Message Response Routing Key] "+ResponseRoutingKey);
-
-        //Perform Service Logic
+        log.info("[Matchmaker server: Request] "+roString);
         String result=null;
         try{
-            result=this.mmOperations.exec(env, requestMessageJsonNode, null);
+            MetaDriver md = new Query(env, roString ,null);
+            result = md.getResults();
             log.info("[Matchmaker server: Async result] "+result);
             return Response.ok().entity(result).build();
         }catch(Exception e){
@@ -444,7 +433,7 @@ public class RestTest {
     }
 
     public static void main( String args[]) throws Exception {
-        RestTest resttest = new RestTest();
+        MMRestService resttest = new MMRestService();
         resttest.getRulesList();
     }
 }

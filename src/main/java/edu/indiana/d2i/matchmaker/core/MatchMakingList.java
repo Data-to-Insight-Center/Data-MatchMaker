@@ -262,35 +262,4 @@ public class MatchMakingList {
 		return matchmaking;
 	}
 
-	public static void main(String[] args) throws JsonProcessingException, ClassNotFoundException {
-		// TODO Auto-generated method stub
-		
-		/*POJOGenerator reposGen = new POJOGenerator("edu.indiana.d2i.sead.matchmaker.pojo.Repository");
-    	reposGen.fromPath("/Users/charmadu/repo/git/git2/sead2/standalone-mm/profile/repositories.json");
-    	MatchMakingList mml=new MatchMakingList((ArrayNode)reposGen.getJsonTree());
-        mml.addWeight("B",3);
-		mml.printCandidateList();
-		mml.reduceWeight("B",1);
-		mml.printCandidateList();
-		mml.setWeight("C",10);
-		mml.printCandidateList();
-		Set<String> notAllowedList= new HashSet<String>();
-		notAllowedList.add("C");
-		mml.notAllowed(notAllowedList);
-		mml.printCandidateList();
-		Set<String> restrictedList= new HashSet<String>();
-		restrictedList.add("A");
-		restrictedList.add("B");
-		restrictedList.add("D");
-		restrictedList.add("F");
-		mml.restricted(restrictedList);
-		mml.printCandidateList();
-		Set<String> preferredList= new HashSet<String>();
-		preferredList.add("A");
-		preferredList.add("B");
-		mml.preferred(preferredList);
-		mml.printCandidateList();*/
-	
-	}
-
 }

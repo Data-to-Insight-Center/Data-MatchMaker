@@ -1,8 +1,0 @@
-{
-	"requestID": "String",
-	"responseKey": "String",
-	"request":{
-			"operation" : "String", 
-			"message" : "object"
-			}
-}

@@ -74,8 +74,6 @@ public class MatchMaker {
         KieContainer kContainer = ks.newKieContainer(kr.getDefaultReleaseId());
 
         KieSession kSession = kContainer.newKieSession();
-        TrackingAgendaEventListener trackingAgendaEventListener = new TrackingAgendaEventListener();
-        //kSession.addEventListener(trackingAgendaEventListener);
 
         for(Object repo:repositories){
             kSession.insert(repo);

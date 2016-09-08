@@ -1,5 +1,20 @@
 # OS generated files #
 ######################
 src/main/java/edu/indiana/d2i/matchmaker/pojo/
-src/main/java/edu/indiana/d2i/matchmaker/service/MatchmakerInputSchema.java
-src/main/java/edu/indiana/d2i/matchmaker/service/Request.java
+
+.idea
+.DS_Store
+.DS_Store?
+._*
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.project
+*.classpath
+*.prefs
+**/target/
+**/.settings/
+*.iml
+*.ipr
+*.iws
+**/bin

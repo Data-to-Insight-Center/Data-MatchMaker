@@ -1,6 +1,0 @@
-{
-	"responseID": "String",
-	"success": boolean,
-	"message" : "object"
-
-}

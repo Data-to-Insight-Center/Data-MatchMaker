@@ -26,7 +26,6 @@
 
 package edu.indiana.d2i.matchmaker.core;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.codemodel.JCodeModel;
@@ -44,33 +43,9 @@ public class POJOFactory {
 		String jsonString =jsonSchema.toString();
 		new SchemaMapper().generate(codeModel, className, packageName,jsonString);
 		codeModel.build(output);
-		//Jsonschema2Pojo.generate(new DefaultGenerationConfig());;
 	}
 
-	public static void main(String[] args) throws JsonProcessingException, IOException, ClassNotFoundException {
-		/*// TODO Auto-generated method stub
-		
-		ObjectMapper mapper = new ObjectMapper();
-
-		POJOGenerator pojogen = new POJOGenerator();
-		pojogen.fromPath(args[0]);
-		if(pojogen.getJsonTree().isArray()){
-			ArrayNode jarray=(ArrayNode)pojogen.getJsonTree();
-			for (int i=0;i<jarray.size();i++){
-				JsonNode conf = jarray.get(i);
-				//System.out.println(conf.get("format").textValue());
-				//System.out.println(conf.get("format").toString());
-				//System.out.println(conf.get("format").asText());
-				JsonNode rootNode = mapper.readTree(new File(conf.get("format").asText()));
-				POJOFactory.createClass(conf.get("className").asText(),conf.get("packageName").asText(), rootNode, new File(conf.get("codeLocation").asText()));
-			}
-
-		}else {
-			JsonNode conf = pojogen.getJsonTree();
-			JsonNode rootNode = mapper.readTree(new File(conf.get("format").asText()));
-			POJOFactory.createClass(conf.get("className").asText(),conf.get("packageName").asText(), rootNode, new File(conf.get("codeLocation").asText()));
-		}
-		*/
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -89,9 +64,6 @@ public class POJOFactory {
 
         rootNode = mapper.readTree(new File(resources + "profile/repositories.json"));
         POJOFactory.createClass("Repositories","edu.indiana.d2i.matchmaker.pojo", rootNode, new File(src));
-
-        rootNode = mapper.readTree(new File(resources + "profile/MatchmakerInputSchema.json"));
-        POJOFactory.createClass("MatchmakerInputSchema","edu.indiana.d2i.matchmaker.service", rootNode, new File(src));
 
     }
 }
