@@ -129,9 +129,7 @@ public class MetaDriver {
 				classNames[i] = classNameList.get(i);
 				log.info("ClassName: "+classNames[i]);
 			}
-			
-			log.info("ResearchObject: "+message);
-			
+			//log.info("ResearchObject: "+message);
 			new MatchMaker().basicGo(System.out, ruleFiles, classNames, candidateList, repositories, person, researchObject);
 			
 		} catch (JsonParseException e1) {

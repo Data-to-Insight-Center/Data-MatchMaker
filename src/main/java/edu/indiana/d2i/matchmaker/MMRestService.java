@@ -73,7 +73,7 @@ public class MMRestService {
         try{
             MetaDriver md = new Query(env, roString ,null);
             result = md.getResults();
-            log.info("[Matchmaker server: Async result] "+result);
+            //log.info("[Matchmaker server: Async result] "+result);
             return Response.ok().entity(result).build();
         }catch(Exception e){
             result=PROCESSING_ERROR_STRING;
