@@ -13,6 +13,7 @@
   $(function() {
     $( "#tabs" ).tabs();
   });
+
   </script>
 </head>
 <body>
@@ -37,8 +38,8 @@
                 <tr class="rowHeader">
                     <th>Manage</th>
                     <th>Rule Name </th>
-                    <th>LHS Full</th>
-                    <th>RHS </th>
+                    <th>Condition</th>
+                    <th>Action </th>
                     <th>Description </th>
                 </tr>
 
@@ -54,17 +55,20 @@
             <div id="success"></div>
             <div width="100%">
                 <div style="float:left">
-                    <h2><br/>Match Maker</h2>
+                    <h2><br/><u>Match Maker</u></h2>
+                    </br>
                     <form enctype="application/json" id="form">
-                        <textarea name="content" style="height:400px;width:450px;" id="inputText" placeholder="PUT YOUR JSON CODE HERE"></textarea>
-                        <br>
+                        <textarea name="content" style="height:500px;width:450px;" id="inputText" placeholder="PUT YOUR JSON CODE HERE"></textarea>
+                        </br>
                         <input id="match" type="submit" name="submit" value="Match" />
                     </form>
                 </div>
                 <div style="float:left" class="vertical_line"></div>
                 <div style="float:left">
-                    <h2><br/>Response Code</h2>
-                    <textarea style="height:400px;width:450px;" id="match_response" placeholder="MATCH MAKER RESPONSE DETAIL"></textarea>
+                    <h2><br/><u>Response Output</u></h2>
+                    </br>
+                    <div id="match_response" contenteditable="true"></div>
+                    <!--<textarea style="height:400px;width:450px;" id="match_response1" placeholder="MATCH MAKER RESPONSE DETAIL"></textarea>-->
                 </div>
             </div>
         </div>
@@ -102,6 +106,7 @@
 			<td class="view_lhsfull">{{html LHSFULL}}</td>
             <td class="view_rhs" style="color:#000000;">{{html RHS}}</td>
             <td class="view_desc" style="color:#000000;">{{html DESC}}</td>
+			<td class="view_mainruleName" style="color:#000000;">{{html MainRuleName}}</td>
         </tr>
     </script>
 </body>

@@ -212,8 +212,14 @@ table {
     width: 300px;
 }.view_desc {
     width: 300px;
-}
-.manage {
+}.view_mainruleName {
+    width: 275px;
+	font-weight:600;
+}.mediumTable tr:hover:first-child td:nth-child(6n) {
+    background-color: #ffffff !important;
+}.mediumTable tr:hover:nth-child(4n) td:nth-child(6n) {
+    background-color: #ffffff !important;
+}.manage {
     width: 150px;
 }
 textarea.ruleName {
@@ -278,7 +284,7 @@ h1 {
   	font-size:14px;
   	font-family:"Verdana";
 }.vertical_line{
-	height:435px;
+	height:600px;
 	width:10px;
 	background:#3b5998;
 	margin:0px 30px 0px 30px;
@@ -304,8 +310,4 @@ h1 {
 	background-repeat: no-repeat;
 	background-position: 10px center;
 	width:18%;
-}#container [word=red]{
-    color:#F00;
-}#container [word=apple]{
-    color:green
 }

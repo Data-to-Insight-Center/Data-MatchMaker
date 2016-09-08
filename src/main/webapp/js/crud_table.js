@@ -13,18 +13,69 @@
 		$(document).ready(function () {
 			$('#match').click(function () {
 				var send = document.getElementById('inputText').value;
+				$('head').append('<link rel="stylesheet" href="css/circle.css" type="text/css" />');
 				$.ajax({
 					url: apiprefix + "/rest",
 
 					type: "POST",
 					data: send,
 					success: function (response, status, jqXHR) {
-						document.getElementById("match_response").innerHTML = JSON.stringify(response,null,2);
-						document.getElementById("success").innerHTML = '<div id="success_output">Hooray!!! Successfully Matched.</div>';
+						
+						var output1 = JSON.stringify(response,null,2);
+						var output = "</br><ul style='border-bottom:groove #008CBA 1px;'>";
+						for(var i = 0; i < response.length; i++) {
+							output += "<li style='border-top:groove #008CBA 1px;'>";
+							var org_identifier = response[i].orgidentifier;
+							var total = response[i]["Total"];
+							var repo_name = response[i]["repositoryName"];
+							var result = response[i]["Result"];
+							var total_match_perc = result.split("|")[0].split(":")[1];
+							var critical_match_perc = result.split("|")[1].split(":")[1];
+							output += "<li style='color:black;font-size:16px;line-height: 150%'><b>" + repo_name + "</b></li><li style='line-height:150%'><b>Total Score : </b>" + 
+										total + "</li><li style='line-height:150%'><b>Result : </b>" + result + "</li><li style='line-height:150%'><b>Per Rule Scores : </b></li>";
+										
+							if (total_match_perc.split(".")[0] == 100){
+								output += "<li class='c100 p100 green' style='float:right;'><span>100%</span><li class='slice'><li class='bar'></li><li class='fill'></li></li></li>";
+							}else if (total_match_perc.split(".")[0] == 50) {
+								output += "<li class='c50 p50 orange' style='float:right;'><span>50%</span><li class='slice'><li class='bar'></li><li class='fill'></li></li></li>";
+							}else if (total_match_perc.split(".")[0] == 0) {
+								output += "<li class='c0 p0 red' style='float:right;'><span>0%</span><li class='slice'><li class='bar'></li><li class='fill'></li></li></li>";
+							}
+								for(var j = 0; j < response[i]["Per Rule Scores"].length; j++){
+									var score = response[i]["Per Rule Scores"][j]["Score"];
+									var mess = response[i]["Per Rule Scores"][j]["Message"];
+									var att_type = response[i]["Per Rule Scores"][j]["Attribute Type"];
+									var rule_name = response[i]["Per Rule Scores"][j]["Rule Name"];	
+									
+									if (score == 0){
+										output += "<li style='color:blue;line-height:150%;margin-left:40px;'><b>Rule Name : </b>" + rule_name + "</li>" +
+													"<li style='color:blue;line-height:150%;margin-left:40px;'><b>Atribute Type : </b>" + att_type + "</li>" + 
+													"<li style='color:blue;line-height:150%;margin-left:40px;'><b>Message : </b>" + mess + "</li>" + 
+													"<li style='color:blue;line-height:150%;margin-left:40px;'><b>Score : </b>" + score + "</li><br/>";
+											
+									}else if(score == 1){
+										output += "<li style='color:green;line-height:150%;margin-left:40px;'><b>Rule Name : </b>" + rule_name + "</li>" +
+													"<li style='color:green;line-height:150%;margin-left:40px;'><b>Atribute Type : </b>" + att_type + "</li>" + 
+													"<li style='color:green;line-height:150%;margin-left:40px;'><b>Message : </b>" + mess + "</li>" + 
+													"<li style='color:green;line-height:150%;margin-left:40px;'><b>Score : </b>" + score + "</li><br/>";
+										
+									}else{
+										output += "<li style='color:red;line-height:150%;margin-left:40px;'><b>Rule Name : </b>" + rule_name + "</li>" +
+													"<li style='color:red;line-height:150%;margin-left:40px;'><b>Atribute Type : </b>" + att_type + "</li>" + 
+													"<li style='color:red;line-height:150%;margin-left:40px;'><b>Message : </b>" + mess + "</li>" + 
+													"<li style='color:red;line-height:150%;margin-left:40px;'><b>Score : </b>" + score + "</li><br/>";
+										
+									}
+								}
+								output += "</li>";
+							}
+							output += "</ul></br>";
+						document.getElementById("match_response").innerHTML = output;
+						document.getElementById("success").innerHTML = '<div id="success_output">Successfully Matched.</div>';
 					},
 
 					error: function (jqXHR, status) {
-						document.getElementById("error").innerHTML = '<div id="error_output">Ooops!!! Invalid Json Code.</div>';
+						document.getElementById("error").innerHTML = '<div id="error_output">Invalid Input(Should be in json format).</div>';
 					}
 				});
 				return false;
@@ -115,10 +166,37 @@
     			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
         			myFunction(xmlhttp.responseText);
 					enumDisplay(xmlhttp.responseText);
+					MergeCommonRows($("#CRUDthisTable"), 6);
     			}
 			}
 				xmlhttp.open("GET", url, true);
 				xmlhttp.send();
+				
+			  
+		 function MergeCommonRows(table, columnIndexToMerge){
+					previous = null;
+					cellToExtend = null;
+					table.find("td:nth-child("+columnIndexToMerge+")").each(function(){
+						jthis = $(this);
+						content = jthis.text()
+						if(previous == content){
+							jthis.remove();
+							if(cellToExtend.attr("rowspan") == undefined){
+								cellToExtend.attr("rowspan", 2);
+							}
+							else{
+								currentrowspan = parseInt(cellToExtend.attr("rowspan"));
+								cellToExtend.attr("rowspan", currentrowspan+1);
+							}
+						}
+						else{
+							previous = content;
+							cellToExtend = jthis;
+						}
+					});
+				};
+
+  			
 
 			function enumDisplay(response){
 				var total_arr = JSON.parse(response);
@@ -244,9 +322,10 @@
 						}
 						rhs_full_val +=  rhs_str + ";\r\n".replace("\n", "<br /><br />");
 					}
+					var main_rule_name = arr.rules[i].name.split("-")[0];
 					rules1.push( { "RuleName": arr.rules[i].name, "LHSID": lhs_id_val, "LHSOBJECT": lhs_obj_val,
 					"LHSFULL": lhs_full_val,
-					"RHS": rhs_full_val, "DESC": arr.rules[i].desc });
+					"RHS": rhs_full_val, "DESC": arr.rules[i].desc , "MainRuleName": main_rule_name});
 				}
 
 			$("#viewRowTemplate").tmpl(rules1).appendTo("#CRUDthisTable");
@@ -348,7 +427,6 @@
 
 
 			if (rowRemovedNum !== 0){
-				alert("Edit Mode");
 				var edit_del_val = data.RuleName;
 				var edit_rule_name_array = {"rules":[{"name" : edit_del_val}]};
 				var edit_del_new_val=JSON.stringify(edit_rule_name_array);
@@ -363,7 +441,6 @@
 
 				edit_del_request.done(function (response){
 							console.log("Response from server: " + response);
-							alert(response);
 						});
 
 			}else{
@@ -380,7 +457,6 @@
 
 			request.done(function (response){
 						console.log("Response from server: " + response);
-						alert(response);
 
 			});
 			}
@@ -397,7 +473,6 @@
 
                 edit_request.done(function (response){
                             console.log("Response from server: " + response);
-                            alert(response);
 
 			});
 			}
@@ -443,7 +518,6 @@
 
             request.done(function (response){
                         console.log("Response from server: " + response);
-                        alert(response);
                     });
 
             $(this).parent().parent().remove();
