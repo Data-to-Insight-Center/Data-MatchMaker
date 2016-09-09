@@ -7,13 +7,13 @@ Java 1.8</br>
 Maven 3</br>
 Configuration and Installation (As a Web Application)
 -----------------
-1) Checkout the sead2 repository
+1) Checkout the Matchmaker repository
 ~~~
 git clone https://github.com/Data-to-Insight-Center/SA-Matchmaker.git
 ~~~
 2) Add Research Object, Repository and People profile templates to the source 
 ~~~
-SA-Matchmaker/src/main/resources/edu/indiana/d2i/sead/matchmaker/profile
+SA-Matchmaker/src/main/resources/edu/indiana/d2i/matchmaker/profile
 ~~~
 Sample profiles templates are already available in the source at https://github.com/Data-to-Insight-Center/SA-Matchmaker/tree/master/src/main/resources/edu/indiana/d2i/matchmaker/profile
 </br>
@@ -30,7 +30,7 @@ cp target/matchmaker-1.0.0.war CATALINA_HOME/webapps/mm.war
 5) Unzip mm.war and add Repositories and People profiles to web application
 ~~~
 unzip CATALINA_HOME/webapps/mm.war -d CATALINA_HOME/webapps/mm
-cp repositories.json person.json CATALINA_HOME/webapps/mm/WEB-INF/classes/edu/indiana/d2i/sead/matchmaker/profile/
+cp repositories.json person.json CATALINA_HOME/webapps/mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/profile/
 ~~~
 6) Start tomcat
 
