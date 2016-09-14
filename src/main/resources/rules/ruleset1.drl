@@ -102,9 +102,9 @@ end
 
 ////// Acceptable File Types ///////
 
-/*rule "Acceptable File Types - Metadata check"
+rule "Acceptable File Types - Metadata check"
 	when
-	    ResearchObject(contentType == null) or Repository(contentType == null)
+	    ResearchObject(getAggregationStatistics().getDataMimetypes() == null) or Repository(getDataMimetypes() == null)
 		repo: Repository()
 		mml: Ruleset1MatchMakingList()
 	then
@@ -113,21 +113,23 @@ end
 
 rule "Acceptable File Types - Not matched"
 	when
-		repo: Repository(contentType != null)
-		ResearchObject(contentType != null && (repo.contentType not contains contentType && repo.contentType not contains "any"))
+		repo : Repository(getDataMimetypes() != null, $list : getDataMimetypes())
+		ResearchObject(getAggregationStatistics().getDataMimetypes().get(0) != null && repo.getDataMimetypes() not contains getAggregationStatistics().getDataMimetypes().get(0) &&  $list not contains "any")
 		mml: Ruleset1MatchMakingList()
 	then
+		//System.out.println("\n\n=============" + $list + "===============\n\n");
 		mml.ruleFired(repo.getOrgidentifier(), "Acceptable File Types", "Collection contains forbidden types" , "-1");
 end
 
 rule "Acceptable File Types - Matched"
 	when
-		repo: Repository(contentType != null)
-		ResearchObject(contentType != null && (repo.contentType contains contentType || repo.contentType contains "any"))
+		repo: Repository(getDataMimetypes() != null, $list : getDataMimetypes())
+		ResearchObject(getAggregationStatistics().getDataMimetypes().get(0) != null && $list contains getAggregationStatistics().getDataMimetypes().get(0) ) or Repository(getDataMimetypes() contains "any")
 		mml: Ruleset1MatchMakingList()
 	then
+		//System.out.println("\n\n=============" + repo.getDataMimetypes() + "---------" +  researchObject.getAggregationStatistics().getDataMimetypes() +  "===============\n\n");
 		mml.ruleFired(repo.getOrgidentifier(), "Acceptable File Types", "Collection only contains acceptable types" , "1");
-end*/
+end
 
 
 
