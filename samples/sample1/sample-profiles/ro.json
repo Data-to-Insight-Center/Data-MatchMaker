@@ -1,0 +1,32 @@
+{
+  "@context": [
+    "https://w3id.org/ore/context"
+  ],
+  "Rights Holder": "https://sead2-beta.ncsa.illinois.edu/api/users/568acec7f26f437b16cafac4",
+  "Aggregation": {
+    "Uploaded By": "https://sead2-beta.ncsa.illinois.edu/api/users/568acec7f26f437b16cafac4",
+    "Title": "test_dataset1 - new-cur-obj-test",
+    "Creation Date": "04-03-2016",
+    "similarTo": "https://sead2-beta.ncsa.illinois.edu/datasets/56966fc4e4b01d13f5ced4a5",
+    "Creator": ["0000-0001-9351-557X"],
+    "Abstract": ["Its a simple test"],
+    "Identifier": "https://sead2-beta.ncsa.illinois.edu/spaces/curations/56da04d7e4b09d159f672258",
+    "Publishing Project": "https://sead2-beta.ncsa.illinois.edu/spaces/56966fa6e4b01d13f5ced4a3",
+    "@id": "https://sead2-beta.ncsa.illinois.edu/api/curations/56da04d7e4b09d159f672258/ore#aggregation"
+  },
+  "Preferences": {
+    "Purpose": "Testing-Only",
+    "Repository": null
+  },
+  "Aggregation Statistics": {
+    "Data Mimetypes": [
+      "image/png",
+      "text/plain"
+    ],
+    "Number of Datasets": 2,
+    "Number of Collections": 1,
+    "Max Dataset Size": "18317",
+    "Total Size": "11000000",
+    "Max Collection Depth": "2"
+  }
+}

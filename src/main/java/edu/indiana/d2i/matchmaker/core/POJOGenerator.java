@@ -57,8 +57,10 @@ public class POJOGenerator {
 		try {
             //fileReader = new BufferedReader(
             //new FileReader(filePath));
-            fileReader = new BufferedReader(new InputStreamReader(
-                    this.getClass().getResourceAsStream(filePath)));
+			InputStream inputStream = this.getClass().getResourceAsStream(filePath);
+			if (inputStream == null)
+				inputStream = new FileInputStream(filePath);
+			fileReader = new BufferedReader(new InputStreamReader(inputStream));
 			JsonNode rootNode = mapper.readTree(fileReader);
 			this.jsonTree=rootNode;	
 	 

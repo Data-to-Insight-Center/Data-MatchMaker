@@ -26,6 +26,7 @@
 
 package edu.indiana.d2i.matchmaker.util;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -43,6 +44,8 @@ public class PropertyReader {
     private PropertyReader(String propertiesPath) {
         try {
             InputStream fileInputStream = PropertyReader.class.getResourceAsStream(propertiesPath);
+            if (fileInputStream == null)
+                fileInputStream = new FileInputStream(propertiesPath);
             properties = new Properties();
             properties.load(fileInputStream);
         } catch (IOException e) {

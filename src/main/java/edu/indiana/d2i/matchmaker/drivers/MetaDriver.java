@@ -68,30 +68,32 @@ public class MetaDriver {
 		String mainClassName = ruleJars.get("MatchMakingListClass").asText();
 		JsonNode jars = ruleJars.get("jars");
 		JsonNode pojoClasses = ruleJars.get("POJOClasses");
-		if(jars.isArray()){
-			ArrayNode jarray=(ArrayNode)jars;
-			for (int i=0;i<jarray.size();i++){
-				JsonNode jar = jarray.get(i);
+		if (jars != null) {
+			if (jars.isArray()) {
+				ArrayNode jarray = (ArrayNode) jars;
+				for (int i = 0; i < jarray.size(); i++) {
+					JsonNode jar = jarray.get(i);
+					ruleFileList.add(new File(jar.get("jarLocation").asText()));
+					ArrayNode classes = (ArrayNode) jar.get("classNames");
+					if (classes.isArray()) {
+						for (int j = 0; j < classes.size(); j++) {
+							classNameList.add(classes.get(j).asText());
+						}
+					} else {
+						classNameList.add(classes.asText());
+					}
+				}
+			} else {
+				JsonNode jar = jars;
 				ruleFileList.add(new File(jar.get("jarLocation").asText()));
-				ArrayNode classes=(ArrayNode)jar.get("classNames");
-				if(classes.isArray()){
-					for (int j=0;j<classes.size();j++){
+				ArrayNode classes = (ArrayNode) jar.get("classNames");
+				if (classes.isArray()) {
+					for (int j = 0; j < classes.size(); j++) {
 						classNameList.add(classes.get(j).asText());
 					}
-				} else{
+				} else {
 					classNameList.add(classes.asText());
 				}
-			}
-		}else {
-			JsonNode jar = jars;
-			ruleFileList.add(new File(jar.get("jarLocation").asText()));
-			ArrayNode classes=(ArrayNode)jar.get("classNames");
-			if(classes.isArray()){
-				for (int j=0;j<classes.size();j++){
-					classNameList.add(classes.get(j).asText());
-				}
-			} else{
-				classNameList.add(classes.asText());
 			}
 		}
 		
