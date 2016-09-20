@@ -10,7 +10,8 @@ import edu.indiana.d2i.matchmaker.custom.ruleset1.*;
 
 
 declare enum Constants
-   TotalSizeAllowance(1000000);
+   TotalSizeAllowance(1000000),
+   DatasetSizeAllowance(1000);
    value : Integer
 end
 
@@ -23,7 +24,7 @@ end
 
 rule "Maximum Total Size - Metadata check"
 // description: Check whether the 'Maximum Total Size' metadata is present in both Research Object and Repository metadata.//
-	salience 20
+	salience 60
 	when
 		Repository(getTotalSize() == null) or ResearchObject(getAggregationStatistics().getTotalSize() == null)
 		repo: Repository()
@@ -34,7 +35,7 @@ end
 
 rule "Maximum Total Size - Not matched"
 // description: Check whether the maximum total size of the collection is above the maximum total size accepted by the repository. //
-	salience 20
+	salience 60
 	when
 		repo: Repository(getTotalSize() != null)
 		researchObject : ResearchObject(getAggregationStatistics().getTotalSize() != null)
@@ -47,7 +48,7 @@ end
 
 rule "Maximum Total Size - Matched"
 // description: Check whether the maximum total size of the collection is below the maximum total size accepted by the repository. //
-	salience 20
+	salience 60
     when
         repo : Repository(getTotalSize() != null)
         researchObject : ResearchObject(getAggregationStatistics().getTotalSize() != null)
@@ -64,7 +65,7 @@ end
 
 rule "Maximum Collection Depth - Metadata check"
 // description: Check whether the 'Maximum Collection Depth' metadata is present in both Research Object and Repository metadata.//
-	salience 10
+	salience 50
 	when
 		Repository(getMaxCollectionDepth() == null) or ResearchObject(getAggregationStatistics().getMaxCollectionDepth() == null)
 		repo: Repository()
@@ -75,7 +76,7 @@ end
 
 rule "Maximum Collection Depth - Not matched"
 // description: Check whether the maximum collection depth of the collection is above the maximum collection depth accepted by the repository. //
-	salience 10
+	salience 50
 	when
 		repo: Repository(getMaxCollectionDepth() != null)
 		researchObject : ResearchObject(getAggregationStatistics().getMaxCollectionDepth() != null)
@@ -88,7 +89,7 @@ end
 
 rule "Maximum Collection Depth - Matched"
 // description: Check whether the maximum collection depth of the collection is below the maximum collection depth accepted by the repository. //
-	salience 10
+	salience 50
 	when
         repo: Repository(getMaxCollectionDepth() != null)
 		researchObject : ResearchObject(getAggregationStatistics().getMaxCollectionDepth() != null)
@@ -105,7 +106,7 @@ end
 
 rule "Acceptable File Types - Metadata check"
 // description: Check whether the 'Data Mime Types' metadata is present in both Research Object and Repository metadata.//
-	salience 30
+	salience 40
 	when
 	    ResearchObject(getAggregationStatistics().getDataMimetypes() == null || getAggregationStatistics().getDataMimetypes().size() == 0 ) or Repository(getDataMimetypes() == null || getDataMimetypes().size() == 0)
 		repo: Repository()
@@ -116,7 +117,7 @@ end
 
 rule "Acceptable File Types - Not matched"
 // description: Check whether the data mime types of the collection is not a subset of data mime types of the repository. //
-	salience 30
+	salience 40
 	when
 	    researchObject : ResearchObject(getAggregationStatistics().getDataMimetypes() != null && getAggregationStatistics().getDataMimetypes().size() > 0)
 		repo: Repository(getDataMimetypes() != null && getDataMimetypes().size() > 0)
@@ -128,7 +129,7 @@ end
 
 rule "Acceptable File Types - Matched"
 // description: Check whether the data mime types of the collection is a subset of data mime types of the repository. //
-	salience 30
+	salience 40
 	when
 	    researchObject : ResearchObject(getAggregationStatistics().getDataMimetypes() != null && getAggregationStatistics().getDataMimetypes().size() > 0)
 		repo: Repository(getDataMimetypes() != null && getDataMimetypes().size() > 0)
@@ -139,3 +140,41 @@ rule "Acceptable File Types - Matched"
 end
 
 
+////// Maximum Dataset Size ///////
+
+rule "Maximum Dataset Size - Metadata check"
+// description: Check whether the 'Maximum Dataset Size' metadata is present in both Research Object and Repository metadata.//
+	salience 30
+	when
+		Repository(getMaxDatasetSize() == null) or ResearchObject(getAggregationStatistics().getMaxDatasetSize() == null)
+		repo: Repository()
+		mml: Ruleset1MatchMakingList()
+	then
+		mml.ruleFired(repo.getOrgidentifier(), "Maximum Dataset Size", "Not used" , "0");
+end
+
+rule "Maximum Dataset Size - Not matched"
+// description: Check whether the maximum dataset size of the collection is above the maximum dataset size accepted by the repository. //
+	salience 30
+	when
+		repo: Repository(getMaxDatasetSize() != null)
+		researchObject : ResearchObject(getAggregationStatistics().getMaxDatasetSize() != null)
+		eval(Double.parseDouble(repo.getMaxDatasetSize()) + Constants.DatasetSizeAllowance.getValue() < Double.parseDouble(researchObject.getAggregationStatistics().getMaxDatasetSize()))
+		mml: Ruleset1MatchMakingList()
+	then
+		String message = "Maximum Dataset size is not acceptable (<= " + repo.getMaxDatasetSize() + ")";
+		mml.ruleFired(repo.getOrgidentifier(), "Maximum Dataset Size", message , "-1");
+end
+
+rule "Maximum Dataset Size - Matched"
+// description: Check whether the maximum dataset size of the collection is below the maximum dataset size accepted by the repository. //
+	salience 30
+    when
+        repo : Repository(getMaxDatasetSize() != null)
+        researchObject : ResearchObject(getAggregationStatistics().getMaxDatasetSize() != null)
+        eval(Double.parseDouble(repo.getMaxDatasetSize()) + Constants.DatasetSizeAllowance.getValue() >= Double.parseDouble(researchObject.getAggregationStatistics().getMaxDatasetSize()))
+        mml : Ruleset1MatchMakingList()
+    then
+    	String message = "Maximum Dataset size is acceptable (<= " + repo.getMaxDatasetSize() + ")";
+        mml.ruleFired(repo.getOrgidentifier(), "Maximum Dataset Size", message, "1");
+end
