@@ -1,0 +1,18 @@
+[
+  {
+    "@context": {
+      "orgidentifier": "NameSpaceString",
+      "repositoryName": "NameSpaceString",
+      "repositoryURL": "NameSpaceString",
+      "maxFileSize": "NameSpaceString",
+      "totalSize": "NameSpaceString",
+      "maxCollectionDepth": "NameSpaceString"
+    },
+    "orgidentifier": "String",
+    "repositoryName": "String",
+    "repositoryURL": "String",
+    "maxFileSize": "String",
+    "totalSize": "String",
+    "maxCollectionDepth": "String"
+  }
+]

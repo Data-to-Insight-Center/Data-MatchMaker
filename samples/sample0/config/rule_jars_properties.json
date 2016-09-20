@@ -1,0 +1,8 @@
+{
+	"MatchMakingListClass" : "edu.indiana.d2i.matchmaker.custom.ruleset1.Ruleset1MatchMakingList",
+	"POJOClasses":{
+					"ResearchObject": "edu.indiana.d2i.matchmaker.pojo.ResearchObject",
+					"Person": "edu.indiana.d2i.matchmaker.pojo.Person",
+					"Repository": "edu.indiana.d2i.matchmaker.pojo.Repository"
+				}
+}
