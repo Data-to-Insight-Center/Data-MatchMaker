@@ -100,11 +100,14 @@ rule "Maximum Collection Depth - Matched"
 end
 
 
+
 ////// Acceptable File Types ///////
 
 rule "Acceptable File Types - Metadata check"
+// description: Check whether the 'Data Mime Types' metadata is present in both Research Object and Repository metadata.//
+	salience 30
 	when
-	    ResearchObject(getAggregationStatistics().getDataMimetypes() == null) or Repository(getDataMimetypes() == null)
+	    ResearchObject(getAggregationStatistics().getDataMimetypes() == null || getAggregationStatistics().getDataMimetypes().size() == 0 ) or Repository(getDataMimetypes() == null || getDataMimetypes().size() == 0)
 		repo: Repository()
 		mml: Ruleset1MatchMakingList()
 	then
@@ -112,25 +115,27 @@ rule "Acceptable File Types - Metadata check"
 end
 
 rule "Acceptable File Types - Not matched"
+// description: Check whether the data mime types of the collection is not a subset of data mime types of the repository. //
+	salience 30
 	when
-		repo : Repository(getDataMimetypes() != null, $list : getDataMimetypes())
-		ResearchObject(getAggregationStatistics().getDataMimetypes().get(0) != null && repo.getDataMimetypes() not contains getAggregationStatistics().getDataMimetypes().get(0) &&  $list not contains "any")
+	    researchObject : ResearchObject(getAggregationStatistics().getDataMimetypes() != null && getAggregationStatistics().getDataMimetypes().size() > 0)
+		repo: Repository(getDataMimetypes() != null && getDataMimetypes().size() > 0)
+		not Ruleset1Utility(collectionContainsList(repo.getDataMimetypes(), researchObject.getAggregationStatistics().getDataMimetypes()))
 		mml: Ruleset1MatchMakingList()
 	then
-		//System.out.println("\n\n=============" + $list + "===============\n\n");
 		mml.ruleFired(repo.getOrgidentifier(), "Acceptable File Types", "Collection contains forbidden types" , "-1");
 end
 
 rule "Acceptable File Types - Matched"
+// description: Check whether the data mime types of the collection is a subset of data mime types of the repository. //
+	salience 30
 	when
-		repo: Repository(getDataMimetypes() != null, $list : getDataMimetypes())
-		ResearchObject(getAggregationStatistics().getDataMimetypes().get(0) != null && $list contains getAggregationStatistics().getDataMimetypes().get(0) ) or Repository(getDataMimetypes() contains "any")
+	    researchObject : ResearchObject(getAggregationStatistics().getDataMimetypes() != null && getAggregationStatistics().getDataMimetypes().size() > 0)
+		repo: Repository(getDataMimetypes() != null && getDataMimetypes().size() > 0)
+		Ruleset1Utility(collectionContainsList(repo.getDataMimetypes(), researchObject.getAggregationStatistics().getDataMimetypes()))
 		mml: Ruleset1MatchMakingList()
 	then
-		//System.out.println("\n\n=============" + repo.getDataMimetypes() + "---------" +  researchObject.getAggregationStatistics().getDataMimetypes() +  "===============\n\n");
 		mml.ruleFired(repo.getOrgidentifier(), "Acceptable File Types", "Collection only contains acceptable types" , "1");
 end
-
-
 
 

@@ -25,6 +25,8 @@
 */
 package edu.indiana.d2i.matchmaker.core;
 
+import java.util.List;
+
 /**
  * @author yuanluo
  *
@@ -47,6 +49,17 @@ public class BasicRuleUtility {
 		return computeBinaryUnitConverter(DEFAULT_UNIT);
 		
 	}
+
+    public boolean collectionContainsList(List<String> collection, List<String> list){
+        boolean result = true;
+        for(String element : list) {
+            if(!collection.contains(element)) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
 	
 	public static void main(String[] args) {	
 		BasicRuleUtility util=new BasicRuleUtility();
