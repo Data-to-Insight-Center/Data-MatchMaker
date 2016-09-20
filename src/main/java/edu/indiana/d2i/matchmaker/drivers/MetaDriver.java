@@ -30,11 +30,18 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
+import com.sun.jersey.api.client.WebResource;
 import edu.indiana.d2i.matchmaker.core.MatchMaker;
 import edu.indiana.d2i.matchmaker.core.MatchMakingList;
 import edu.indiana.d2i.matchmaker.core.POJOGenerator;
 import edu.indiana.d2i.matchmaker.util.MatchmakerENV;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -169,30 +176,70 @@ public class MetaDriver {
 	}
 	
 	public String getRepositories() throws ClassNotFoundException{
-		POJOGenerator reposGen = new POJOGenerator();
-		String cachedProfileRepositories = this.env.getCachedProfileRepositories();
-		if(cachedProfileRepositories!=null&&cachedProfileRepositories!=""){
-			reposGen.fromPath(cachedProfileRepositories);
-			//log.info("RepoList: "+reposGen.getJsonTree().toString());
-			return reposGen.getJsonTree().toString();
-		} else{
-			//TODO: Retrieve repository profiles from PDT
-			return null;
-		}
-	}
+        POJOGenerator reposGen = new POJOGenerator();
+        String cachedProfileRepositories = this.env.getCachedProfileRepositories();
+        String repoRestUrl = this.env.getRepoRestUrl();
+        if (cachedProfileRepositories != null && !cachedProfileRepositories.equals("")) {
+            reposGen.fromPath(cachedProfileRepositories);
+            //log.info("RepoList: "+reposGen.getJsonTree().toString());
+            return reposGen.getJsonTree().toString();
+        } else if (repoRestUrl != null && !repoRestUrl.equals("")) {
+            WebResource WebService = Client.create().resource(repoRestUrl);
+            ClientResponse response = WebService
+                    .accept("application/json")
+                    .type("application/json")
+                    .get(ClientResponse.class);
+            JSONArray repoObjectList = null;
+            try {
+                JSONArray finalRepoArray = new JSONArray();
+                repoObjectList = new JSONArray(response.getEntity(new GenericType<String>() {}));
+                ArrayList<String> repos = new ArrayList<>();
+                for(int i= 0 ; i < repoObjectList.length() ; i++) {
+                    repos.add(((JSONObject)repoObjectList.get(i)).getString("orgidentifier"));
+                }
+                for(String repoId : repos) {
+                    response = WebService.path(repoId)
+                            .accept("application/json")
+                            .type("application/json")
+                            .get(ClientResponse.class);
+                    finalRepoArray.put(new JSONObject(response.getEntity(new GenericType<String>() {})));
+                }
+                reposGen.fromString(finalRepoArray.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return reposGen.getJsonTree().toString();
+        } else {
+            return null;
+        }
+    }
 	
 	public String getPerson(Object researchObject) throws ClassNotFoundException{
-		POJOGenerator personGen = new POJOGenerator();
-		String cachedProfilePerson = this.env.getCachedProfilePerson();
-		if(cachedProfilePerson!=null&&cachedProfilePerson!=""){
-			personGen.fromPath(cachedProfilePerson);
-			//log.info("Person: "+personGen.getJsonTree().get(0).toString());
-			return personGen.getJsonTree().get(0).toString(); //return the first person, just for test purpose
-		}else {
-			//TODO: Retrieve person profile from PDT, based on person attribute in a researchObject
-			return null;
-		}
-	}
+        POJOGenerator personGen = new POJOGenerator();
+        String cachedProfilePerson = this.env.getCachedProfilePerson();
+        String peopleRestUrl = this.env.getPeopleRestUrl();
+        if (cachedProfilePerson != null && !cachedProfilePerson.equals("")) {
+            personGen.fromPath(cachedProfilePerson);
+            //log.info("Person: "+personGen.getJsonTree().get(0).toString());
+            return personGen.getJsonTree().get(0).toString(); //return the first person, just for test purpose
+        } else if (peopleRestUrl != null && !peopleRestUrl.equals("")) {
+            WebResource WebService = Client.create().resource(peopleRestUrl);
+            ClientResponse response = WebService
+                    .accept("application/json")
+                    .type("application/json")
+                    .get(ClientResponse.class);
+            JSONObject peopleObject = null;
+            try {
+                peopleObject = new JSONObject(response.getEntity(new GenericType<String>() {}));
+                personGen.fromString(peopleObject.getJSONArray("persons").toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return personGen.getJsonTree().get(0).toString();
+        } else {
+            return null;
+        }
+    }
 
 	public MatchmakerENV getENV() {
 		// TODO Auto-generated method stub

@@ -40,18 +40,20 @@ public class MatchmakerENV {
 	private String RuleJarProfilePath;
 	private String CachedProfileRepositories;
 	private String CachedProfilePerson;
-	private String RepoPropertiesPath;
-	
+    private String peopleRestUrl;
+	private String repoRestUrl;
+
 	public MatchmakerENV(PropertyReader property){
 		//this.property = PropertyReader.getInstance(propertiesPath);
 		this.property = property;
 		this.setRuleJarProfilePath(this.property.getProperty("matchmaker.rule.jar.properties.path"));
 		this.setCachedProfileRepositories(this.property.getProperty("cached.profile.repositories"));
 		this.setCachedProfilePerson(this.property.getProperty("cached.profile.person"));
-		this.setRepoPropertiesPath(this.property.getProperty("repo.properties.path"));
-	}
+		this.setPeopleRestUrl(this.property.getProperty("people.rest.url"));
+        this.setRepoRestUrl(this.property.getProperty("repo.rest.url"));
+    }
 
-	public void	setRuleJarProfilePath(String RuleJarProfilePath){
+    public void	setRuleJarProfilePath(String RuleJarProfilePath){
 		this.RuleJarProfilePath=RuleJarProfilePath;
 	}
 	public String getRuleJarProfilePath(){
@@ -69,7 +71,20 @@ public class MatchmakerENV {
 	public String getCachedProfilePerson(){
 		return this.CachedProfilePerson;
 	}
-	public void	setRepoPropertiesPath(String RepoPropertiesPath){
-		this.RepoPropertiesPath=RepoPropertiesPath;
-	}
+
+    public String getPeopleRestUrl() {
+        return peopleRestUrl;
+    }
+
+    public void setPeopleRestUrl(String peopleRestUrl) {
+        this.peopleRestUrl = peopleRestUrl;
+    }
+
+    public String getRepoRestUrl() {
+        return repoRestUrl;
+    }
+
+    public void setRepoRestUrl(String repoRestUrl) {
+        this.repoRestUrl = repoRestUrl;
+    }
 }
