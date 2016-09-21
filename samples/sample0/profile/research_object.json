@@ -1,0 +1,20 @@
+{
+  "@context": {
+    "identifier": "NameSpaceString",
+    "title": "NameSpaceString",
+    "creator": "NameSpaceString",
+    "abstract": "NameSpaceString",
+    "creationDate": "NameSpaceString",
+    "totalSize": "NameSpaceString",
+    "maxFileSize": "NameSpaceString",
+    "maxCollectionDepth": "NameSpaceString"
+  },
+  "identifier": "String",
+  "title": "String",
+  "creator": "String",
+  "abstract": "String",
+  "creation Date": "String",
+  "totalSize": "String",
+  "maxFileSize": "String",
+  "maxCollectionDepth": "String"
+}

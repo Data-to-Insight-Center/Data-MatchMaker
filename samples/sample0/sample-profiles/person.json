@@ -1,0 +1,16 @@
+[
+  {
+    "@context": {
+      "identifier": "http://mm.sample.org/Person/identifier",
+      "firstName": "http://mm.sample.org/Person/firstName",
+      "lastName": "http://mm.sample.org/Person/lastName",
+      "email": "http://mm.sample.org/Person/email",
+      "affiliation": "http://mm.sample.org/Person/affiliation"
+    },
+    "identifier": "http://orcid.org/0000-0003-2934-0002",
+    "firstName": "John",
+    "lastName": "Smith",
+    "email": "jsmith@indiana.edu",
+    "affiliation": "Indiana University"
+  }
+]

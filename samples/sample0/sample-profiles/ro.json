@@ -1,0 +1,20 @@
+{
+  "@context": {
+    "identifier": "http://mm.sample.org/RO/identifier",
+    "title": "http://mm.sample.org/RO/title",
+    "creator": "http://mm.sample.org/RO/creator",
+    "abstract": "http://mm.sample.org/RO/abstract",
+    "creationDate": "http://mm.sample.org/RO/creationDate",
+    "totalSize": "http://mm.sample.org/RO/totalSize",
+    "maxFileSize": "http://mm.sample.org/RO/maxFileSize",
+    "maxCollectionDepth": "http://mm.sample.org/RO/maxCollectionDepth"
+  },
+  "identifier": "sample0-ro1",
+  "title": "Sample0 - Research Object",
+  "creator": "John Smith",
+  "abstract": "Sample research object to test matchmaker funcitonality",
+  "creationDate": "09/20/2016",
+  "totalSize": "80000",
+  "maxFileSize": "10000",
+  "maxCollectionDepth": "3"
+}

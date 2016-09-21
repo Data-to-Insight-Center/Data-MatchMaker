@@ -1,0 +1,50 @@
+[
+  {
+    "@context": {
+      "orgidentifier": "http://mm.sample.org/Repository/identifier",
+      "repositoryName": "http://mm.sample.org/Repository/repositoryName",
+      "repositoryURL": "http://mm.sample.org/Repository/repositoryURL",
+      "maxFileSize": "http://mm.sample.org/Repository/maxFileSize",
+      "totalSize": "http://mm.sample.org/Repository/totalSize",
+      "maxCollectionDepth": "http://mm.sample.org/Repository/maxCollectionDepth"
+    },
+    "orgidentifier": "repoAlice",
+    "repositoryName": "Alice Repository",
+    "repositoryURL": "http://mm.sample0.org/repository/alice",
+    "maxFileSize": "50000",
+    "totalSize": "100000",
+    "maxCollectionDepth": "1"
+  },
+  {
+    "@context": {
+      "orgidentifier": "http://mm.sample.org/Repository/identifier",
+      "repositoryName": "http://mm.sample.org/Repository/repositoryName",
+      "repositoryURL": "http://mm.sample.org/Repository/repositoryURL",
+      "maxFileSize": "http://mm.sample.org/Repository/maxFileSize",
+      "totalSize": "http://mm.sample.org/Repository/totalSize",
+      "maxCollectionDepth": "http://mm.sample.org/Repository/maxCollectionDepth"
+    },
+    "orgidentifier": "repoBob",
+    "repositoryName": "Bob Repository",
+    "repositoryURL": "http://mm.sample0.org/repository/bob",
+    "maxFileSize": "20000",
+    "totalSize": "400000",
+    "maxCollectionDepth": "7"
+  },
+  {
+    "@context": {
+      "orgidentifier": "http://mm.sample.org/Repository/identifier",
+      "repositoryName": "http://mm.sample.org/Repository/repositoryName",
+      "repositoryURL": "http://mm.sample.org/Repository/repositoryURL",
+      "maxFileSize": "http://mm.sample.org/Repository/maxFileSize",
+      "totalSize": "http://mm.sample.org/Repository/totalSize",
+      "maxCollectionDepth": "http://mm.sample.org/Repository/maxCollectionDepth"
+    },
+    "orgidentifier": "repoChris",
+    "repositoryName": "Chris Repository",
+    "repositoryURL": "http://mm.sample0.org/repository/chris",
+    "maxFileSize": "6000",
+    "totalSize": "40000",
+    "maxCollectionDepth": "3"
+  }
+]

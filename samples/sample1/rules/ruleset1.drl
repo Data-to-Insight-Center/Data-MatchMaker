@@ -29,7 +29,7 @@ rule "Maximum Total Size - Metadata check"
 		repo: Repository()
 		mml: Ruleset1MatchMakingList()
 	then
-		mml.ruleFired(repo.getOrgidentifier(), "Sample:Maximum Total Size", "Not used" , "0", AttType.CRITICAL.getValue());
+		mml.ruleFired(repo.getOrgidentifier(), "Sample1:Maximum Total Size", "Not used" , "0", AttType.CRITICAL.getValue());
 end
 
 rule "Maximum Total Size - Not matched"
@@ -42,7 +42,7 @@ rule "Maximum Total Size - Not matched"
 		mml: Ruleset1MatchMakingList()
 	then
 		String message = "Total size is not acceptable (<= " + repo.getTotalSize() + ")";
-		mml.ruleFired(repo.getOrgidentifier(), "Sample:Maximum Total Size", message , "-1", AttType.CRITICAL.getValue());
+		mml.ruleFired(repo.getOrgidentifier(), "Sample1:Maximum Total Size", message , "-1", AttType.CRITICAL.getValue());
 end
 
 rule "Maximum Total Size - Matched"
@@ -55,7 +55,7 @@ rule "Maximum Total Size - Matched"
         mml : Ruleset1MatchMakingList()
     then
     	String message = "Total size is acceptable (<= " + repo.getTotalSize() + ")";
-        mml.ruleFired(repo.getOrgidentifier(), "Sample:Maximum Total Size", message, "1", AttType.CRITICAL.getValue());
+        mml.ruleFired(repo.getOrgidentifier(), "Sample1:Maximum Total Size", message, "1", AttType.CRITICAL.getValue());
 end
 
 
@@ -70,7 +70,7 @@ rule "Maximum Collection Depth - Metadata check"
 		repo: Repository()
 		mml: Ruleset1MatchMakingList()
 	then
-		mml.ruleFired(repo.getOrgidentifier(), "Maximum Collection Depth", "Not used" , "0", AttType.CRITICAL.getValue());
+		mml.ruleFired(repo.getOrgidentifier(), "Sample1:Maximum Collection Depth", "Not used" , "0", AttType.CRITICAL.getValue());
 end
 
 rule "Maximum Collection Depth - Not matched"
@@ -83,7 +83,7 @@ rule "Maximum Collection Depth - Not matched"
 		mml: Ruleset1MatchMakingList()
 	then
 		String message = "Collection depth is not acceptable (<= " + repo.getMaxCollectionDepth() + ")";
-		mml.ruleFired(repo.getOrgidentifier(), "Maximum Collection Depth", message , "-1", AttType.CRITICAL.getValue());
+		mml.ruleFired(repo.getOrgidentifier(), "Sample1:Maximum Collection Depth", message , "-1", AttType.CRITICAL.getValue());
 end
 
 rule "Maximum Collection Depth - Matched"
@@ -96,7 +96,7 @@ rule "Maximum Collection Depth - Matched"
 		mml: Ruleset1MatchMakingList()
 	then
 		String message = "Collection depth is acceptable (<= " + repo.getMaxCollectionDepth() + ")";
-		mml.ruleFired(repo.getOrgidentifier(), "Maximum Collection Depth", message , "1", AttType.CRITICAL.getValue());
+		mml.ruleFired(repo.getOrgidentifier(), "Sample1:Maximum Collection Depth", message , "1", AttType.CRITICAL.getValue());
 end
 
 
@@ -108,7 +108,7 @@ rule "Acceptable File Types - Metadata check"
 		repo: Repository()
 		mml: Ruleset1MatchMakingList()
 	then
-		mml.ruleFired(repo.getOrgidentifier(), "Acceptable File Types", "Not used" , "0");
+		mml.ruleFired(repo.getOrgidentifier(), "Sample1:Acceptable File Types", "Not used" , "0");
 end
 
 rule "Acceptable File Types - Not matched"
@@ -118,7 +118,7 @@ rule "Acceptable File Types - Not matched"
 		mml: Ruleset1MatchMakingList()
 	then
 		//System.out.println("\n\n=============" + $list + "===============\n\n");
-		mml.ruleFired(repo.getOrgidentifier(), "Acceptable File Types", "Collection contains forbidden types" , "-1");
+		mml.ruleFired(repo.getOrgidentifier(), "Sample1:Acceptable File Types", "Collection contains forbidden types" , "-1");
 end
 
 rule "Acceptable File Types - Matched"
@@ -128,7 +128,7 @@ rule "Acceptable File Types - Matched"
 		mml: Ruleset1MatchMakingList()
 	then
 		//System.out.println("\n\n=============" + repo.getDataMimetypes() + "---------" +  researchObject.getAggregationStatistics().getDataMimetypes() +  "===============\n\n");
-		mml.ruleFired(repo.getOrgidentifier(), "Acceptable File Types", "Collection only contains acceptable types" , "1");
+		mml.ruleFired(repo.getOrgidentifier(), "Sample1:Acceptable File Types", "Collection only contains acceptable types" , "1");
 end
 
 

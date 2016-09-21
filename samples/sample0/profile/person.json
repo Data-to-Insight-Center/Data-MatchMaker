@@ -1,0 +1,14 @@
+{
+  "@context": {
+    "identifier": "NameSpaceString",
+    "firstName": "NameSpaceString",
+    "lastName": "NameSpaceString",
+    "email": "NameSpaceString",
+    "affiliation": "NameSpaceString"
+  },
+  "identifier": "String",
+  "firstName": "String",
+  "lastName": "String",
+  "email": "String",
+  "affiliation": "String"
+}
