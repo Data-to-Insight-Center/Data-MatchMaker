@@ -26,8 +26,8 @@ rule "Maximum Total Size - Metadata check"
 // description: Check whether the 'Maximum Total Size' metadata is present in both Research Object and Repository metadata.//
 	salience 60
 	when
-		Repository(getTotalSize() == null) or ResearchObject(getAggregationStatistics().getTotalSize() == null)
 		repo: Repository()
+		eval(repo.getTotalSize() == null) or ResearchObject(getAggregationStatistics().getTotalSize() == null)
 		mml: Ruleset1MatchMakingList()
 	then
 		mml.ruleFired(repo.getOrgidentifier(), "Maximum Total Size", "Not used" , "0", AttType.CRITICAL.getValue());
@@ -67,8 +67,8 @@ rule "Maximum Collection Depth - Metadata check"
 // description: Check whether the 'Maximum Collection Depth' metadata is present in both Research Object and Repository metadata.//
 	salience 50
 	when
-		Repository(getMaxCollectionDepth() == null) or ResearchObject(getAggregationStatistics().getMaxCollectionDepth() == null)
 		repo: Repository()
+		eval(repo.getMaxCollectionDepth() == null) or ResearchObject(getAggregationStatistics().getMaxCollectionDepth() == null)
 		mml: Ruleset1MatchMakingList()
 	then
 		mml.ruleFired(repo.getOrgidentifier(), "Maximum Collection Depth", "Not used" , "0", AttType.CRITICAL.getValue());
@@ -108,8 +108,8 @@ rule "Acceptable File Types - Metadata check"
 // description: Check whether the 'Data Mime Types' metadata is present in both Research Object and Repository metadata.//
 	salience 40
 	when
-	    ResearchObject(getAggregationStatistics().getDataMimetypes() == null || getAggregationStatistics().getDataMimetypes().size() == 0 ) or Repository(getDataMimetypes() == null || getDataMimetypes().size() == 0)
 		repo: Repository()
+	    ResearchObject(getAggregationStatistics().getDataMimetypes() == null || getAggregationStatistics().getDataMimetypes().size() == 0 ) or eval(repo.getDataMimetypes() == null || repo.getDataMimetypes().size() == 0)
 		mml: Ruleset1MatchMakingList()
 	then
 		mml.ruleFired(repo.getOrgidentifier(), "Acceptable File Types", "Not used" , "0");
@@ -146,8 +146,8 @@ rule "Maximum Dataset Size - Metadata check"
 // description: Check whether the 'Maximum Dataset Size' metadata is present in both Research Object and Repository metadata.//
 	salience 30
 	when
-		Repository(getMaxDatasetSize() == null) or ResearchObject(getAggregationStatistics().getMaxDatasetSize() == null)
 		repo: Repository()
+		eval(repo.getMaxDatasetSize() == null) or ResearchObject(getAggregationStatistics().getMaxDatasetSize() == null)
 		mml: Ruleset1MatchMakingList()
 	then
 		mml.ruleFired(repo.getOrgidentifier(), "Maximum Dataset Size", "Not used" , "0");
@@ -177,4 +177,40 @@ rule "Maximum Dataset Size - Matched"
     then
     	String message = "Maximum Dataset size is acceptable (<= " + repo.getMaxDatasetSize() + ")";
         mml.ruleFired(repo.getOrgidentifier(), "Maximum Dataset Size", message, "1");
+end
+
+
+////// Purpose ///////
+
+rule "Purpose - Metadata check"
+// description: Check whether the 'Purpose' metadata is present in both Research Object and Repository metadata.//
+	salience 20
+	when
+		repo: Repository()
+	    ResearchObject(getPreferences().getPurpose() == null ) || eval(repo.getPurpose() == null || repo.getPurpose().size() == 0)
+		mml: Ruleset1MatchMakingList()
+	then
+		mml.ruleFired(repo.getOrgidentifier(), "Purpose", "Not used" , "0");
+end
+
+rule "Purpose - Not matched"
+// description: Check whether purpose of the collection is not included in purpose of the repository. //
+	salience 20
+	when
+		repo: Repository(getPurpose() != null && getPurpose().size() > 0, $list : getPurpose())
+	    researchObject : ResearchObject(getPreferences().getPurpose() != null && $list not contains getPreferences().getPurpose())
+		mml: Ruleset1MatchMakingList()
+	then
+		mml.ruleFired(repo.getOrgidentifier(), "Purpose", "Purpose of the collection does not match with the Purpose of the repository" , "-1");
+end
+
+rule "Purpose - Matched"
+// description: Check whether purpose of the collection is included in purpose of the repository. //
+	salience 20
+	when
+		repo: Repository(getPurpose() != null && getPurpose().size() > 0, $list : getPurpose())
+	    researchObject : ResearchObject(getPreferences().getPurpose() != null && $list contains getPreferences().getPurpose())
+		mml: Ruleset1MatchMakingList()
+	then
+		mml.ruleFired(repo.getOrgidentifier(), "Purpose", "Purpose of the collection matches with the Purpose of the repository" , "1");
 end

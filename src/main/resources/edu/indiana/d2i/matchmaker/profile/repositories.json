@@ -91,6 +91,9 @@
     "maxProjectSpaceSize": {
       "unit": "MB/GB/TB",
       "value": 1
-    }
+    },
+    "Purpose": [
+      "String"
+    ]
   }
 ]
