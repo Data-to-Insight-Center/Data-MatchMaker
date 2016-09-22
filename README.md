@@ -55,7 +55,14 @@ people.profile.rest.url=http://localhost:8082/sead-pdt/people
 people.identifier=@id
 ~~~
 'repo.list.rest.url' should list the repository profiles as a list of json objects and each json object should have the 'repo.identifier' field which can be used to get full profile information for each repository by appending that identifier to the 'repo.profile.rest.url'.</br>
-Similarly 'people.list.rest.url' should list the people profiles as a list of json objects and each json object should have the 'people.identifier' field which can be used to get full profile information for each person by appending that identifier to the 'people.profile.rest.url'.</br></br>
+Similarly 'people.list.rest.url' should list the people profiles as a list of json objects and each json object should have the 'people.identifier' field which can be used to get full profile information for each person by appending that identifier to the 'people.profile.rest.url'.</br>
+
+Please see the following documentation for more details about these REST endpoints;</br>
+https://github.com/Data-to-Insight-Center/PDT/wiki/Repository-Service</br>
+https://github.com/Data-to-Insight-Center/PDT/wiki/People-Service
+
+</br></br>
+
 7) Start tomcat
 
 Use matchmaker - REST API
