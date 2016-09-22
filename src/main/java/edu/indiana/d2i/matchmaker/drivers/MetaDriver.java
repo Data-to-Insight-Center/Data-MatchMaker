@@ -46,6 +46,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -178,12 +179,14 @@ public class MetaDriver {
 	public String getRepositories() throws ClassNotFoundException{
         POJOGenerator reposGen = new POJOGenerator();
         String cachedProfileRepositories = this.env.getCachedProfileRepositories();
-        String repoRestUrl = this.env.getRepoRestUrl();
+        String repoRestUrl = this.env.getRepoListUrl();
+        String repoProfileUrl = this.env.getRepoProfileUrl();
+        String repoIdentifier = this.env.getRepoIdentifier() != null ? this.env.getRepoIdentifier() : "orgidentifier";
         if (cachedProfileRepositories != null && !cachedProfileRepositories.equals("")) {
             reposGen.fromPath(cachedProfileRepositories);
             //log.info("RepoList: "+reposGen.getJsonTree().toString());
             return reposGen.getJsonTree().toString();
-        } else if (repoRestUrl != null && !repoRestUrl.equals("")) {
+        } else if (repoRestUrl != null && !repoRestUrl.equals("") && repoProfileUrl != null && !repoProfileUrl.equals("")) {
             WebResource WebService = Client.create().resource(repoRestUrl);
             ClientResponse response = WebService
                     .accept("application/json")
@@ -195,10 +198,11 @@ public class MetaDriver {
                 repoObjectList = new JSONArray(response.getEntity(new GenericType<String>() {}));
                 ArrayList<String> repos = new ArrayList<>();
                 for(int i= 0 ; i < repoObjectList.length() ; i++) {
-                    repos.add(((JSONObject)repoObjectList.get(i)).getString("orgidentifier"));
+                    repos.add(URLEncoder.encode(((JSONObject) repoObjectList.get(i)).getString(repoIdentifier)));
                 }
+                WebResource WebServiceProfile = Client.create().resource(repoRestUrl);
                 for(String repoId : repos) {
-                    response = WebService.path(repoId)
+                    response = WebServiceProfile.path(repoId)
                             .accept("application/json")
                             .type("application/json")
                             .get(ClientResponse.class);
@@ -217,21 +221,37 @@ public class MetaDriver {
 	public String getPerson(Object researchObject) throws ClassNotFoundException{
         POJOGenerator personGen = new POJOGenerator();
         String cachedProfilePerson = this.env.getCachedProfilePerson();
-        String peopleRestUrl = this.env.getPeopleRestUrl();
+        String peopleListUrl = this.env.getPeopleListUrl();
+        String peopleProfileUrl = this.env.getPeopleProfileUrl();
+        String peopleIdentifier = this.env.getPeopleIdentifier() != null ? this.env.getPeopleIdentifier() : "@id";
         if (cachedProfilePerson != null && !cachedProfilePerson.equals("")) {
             personGen.fromPath(cachedProfilePerson);
             //log.info("Person: "+personGen.getJsonTree().get(0).toString());
             return personGen.getJsonTree().get(0).toString(); //return the first person, just for test purpose
-        } else if (peopleRestUrl != null && !peopleRestUrl.equals("")) {
-            WebResource WebService = Client.create().resource(peopleRestUrl);
+        } else if (peopleListUrl != null && !peopleListUrl.equals("") && peopleProfileUrl != null && !peopleProfileUrl.equals("")) {
+            WebResource WebService = Client.create().resource(peopleListUrl);
             ClientResponse response = WebService
                     .accept("application/json")
                     .type("application/json")
                     .get(ClientResponse.class);
-            JSONObject peopleObject = null;
+            JSONArray peopleObjectList = null;
             try {
-                peopleObject = new JSONObject(response.getEntity(new GenericType<String>() {}));
-                personGen.fromString(peopleObject.getJSONArray("persons").toString());
+                JSONArray finalPeopleArray = new JSONArray();
+                peopleObjectList = new JSONArray(response.getEntity(new GenericType<String>() {}));
+                ArrayList<String> people = new ArrayList<>();
+                for(int i= 0 ; i < peopleObjectList.length() ; i++) {
+                    people.add(URLEncoder.encode(((JSONObject) peopleObjectList.get(i)).getString(peopleIdentifier)));
+                }
+                WebResource WebServiceProfile = Client.create().resource(peopleProfileUrl);
+                for(String peopleId : people) {
+                    response = WebServiceProfile.path(peopleId)
+                            .accept("application/json")
+                            .type("application/json")
+                            .get(ClientResponse.class);
+                    finalPeopleArray.put(new JSONObject(response.getEntity(new GenericType<String>() {
+                    })));
+                }
+                personGen.fromString(finalPeopleArray.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }

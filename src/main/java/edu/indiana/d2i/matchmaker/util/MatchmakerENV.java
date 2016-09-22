@@ -40,8 +40,19 @@ public class MatchmakerENV {
 	private String RuleJarProfilePath;
 	private String CachedProfileRepositories;
 	private String CachedProfilePerson;
-    private String peopleRestUrl;
-	private String repoRestUrl;
+
+    public String getPeopleListUrl() {
+        return peopleListUrl;
+    }
+
+
+
+    private String peopleListUrl;
+    private String peopleProfileUrl;
+    private String peopleIdentifier;
+	private String repoListUrl;
+	private String repoProfileUrl;
+	private String repoIdentifier;
 
 	public MatchmakerENV(PropertyReader property){
 		//this.property = PropertyReader.getInstance(propertiesPath);
@@ -49,8 +60,12 @@ public class MatchmakerENV {
 		this.setRuleJarProfilePath(this.property.getProperty("matchmaker.rule.jar.properties.path"));
 		this.setCachedProfileRepositories(this.property.getProperty("cached.profile.repositories"));
 		this.setCachedProfilePerson(this.property.getProperty("cached.profile.person"));
-		this.setPeopleRestUrl(this.property.getProperty("people.rest.url"));
-        this.setRepoRestUrl(this.property.getProperty("repo.rest.url"));
+		this.setPeopleListUrl(this.property.getProperty("people.list.rest.url"));
+		this.setPeopleProfileUrl(this.property.getProperty("people.profile.rest.url"));
+		this.setPeopleIdentifier(this.property.getProperty("people.identifier"));
+        this.setRepoListUrl(this.property.getProperty("repo.list.rest.url"));
+        this.setRepoProfileUrl(this.property.getProperty("repo.profile.rest.url"));
+        this.setRepoIdentifier(this.property.getProperty("repo.identifier"));
     }
 
     public void	setRuleJarProfilePath(String RuleJarProfilePath){
@@ -72,19 +87,47 @@ public class MatchmakerENV {
 		return this.CachedProfilePerson;
 	}
 
-    public String getPeopleRestUrl() {
-        return peopleRestUrl;
+    public void setPeopleListUrl(String peopleListUrl) {
+        this.peopleListUrl = peopleListUrl;
     }
 
-    public void setPeopleRestUrl(String peopleRestUrl) {
-        this.peopleRestUrl = peopleRestUrl;
+    public String getPeopleProfileUrl() {
+        return peopleProfileUrl;
     }
 
-    public String getRepoRestUrl() {
-        return repoRestUrl;
+    public void setPeopleProfileUrl(String peopleProfileUrl) {
+        this.peopleProfileUrl = peopleProfileUrl;
     }
 
-    public void setRepoRestUrl(String repoRestUrl) {
-        this.repoRestUrl = repoRestUrl;
+    public String getPeopleIdentifier() {
+        return peopleIdentifier;
+    }
+
+    public void setPeopleIdentifier(String peopleIdentifier) {
+        this.peopleIdentifier = peopleIdentifier;
+    }
+
+    public String getRepoListUrl() {
+        return repoListUrl;
+    }
+
+    public void setRepoListUrl(String repoListUrl) {
+        this.repoListUrl = repoListUrl;
+    }
+
+    public String getRepoProfileUrl() {
+        return repoProfileUrl;
+    }
+
+    public void setRepoProfileUrl(String repoProfileUrl) {
+        this.repoProfileUrl = repoProfileUrl;
+    }
+
+    public String getRepoIdentifier() {
+        return repoIdentifier;
+    }
+
+    public void setRepoIdentifier(String repoIdentifier) {
+        this.repoIdentifier = repoIdentifier;
     }
 }
