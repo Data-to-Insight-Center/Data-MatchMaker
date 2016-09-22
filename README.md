@@ -59,7 +59,7 @@ Similarly 'people.list.rest.url' should list the people profiles as a list of js
 
 Please see the following documentation for more details about these REST endpoints;</br>
 ~~~
-https://github.com/Data-to-Insight-Center/PDT/wiki/Repository-Service</br>
+https://github.com/Data-to-Insight-Center/PDT/wiki/Repository-Service
 https://github.com/Data-to-Insight-Center/PDT/wiki/People-Service
 ~~~
 
