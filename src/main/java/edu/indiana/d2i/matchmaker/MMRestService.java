@@ -239,15 +239,21 @@ public class MMRestService {
                 if (lhs_constraint.size() > 0) {
 
                     for (int q = 0; q < lhs_constraint.size(); q++) {
-                        PatternDescr col = (PatternDescr) first.getDescrs().get(q);
+                        if (lhs_constraint.get(q) instanceof EvalDescr) {
+                            EvalDescr col = (EvalDescr) lhs_constraint.get(q);
+                            String lhs_objtype = "eval";
 
-                        lhs_identifier = col.getIdentifier();
-                        String lhs_objtype = col.getObjectType();
-                        AndDescr lhs_const = (AndDescr) col.getConstraint();
+                            String lhs_const_or_val = (String) col.getContent();
+                            new_lhs_obj += lhs_objtype + "(" + lhs_const_or_val + ") or ";
+                        }else{
+                            PatternDescr col = (PatternDescr) first.getDescrs().get(q);
+                            lhs_identifier = col.getIdentifier();
+                            String lhs_objtype = col.getObjectType();
+                            AndDescr lhs_const = (AndDescr) col.getConstraint();
 
-                        String lhs_const_or_val = lhs_const.getDescrs().get(0).getText();
-                        new_lhs_obj += lhs_objtype +"("+lhs_const_or_val+") or ";
-
+                            String lhs_const_or_val = lhs_const.getDescrs().get(0).getText();
+                            new_lhs_obj += lhs_objtype + "(" + lhs_const_or_val + ") or ";
+                        }
                     }
 
                 }
@@ -264,9 +270,42 @@ public class MMRestService {
                 }
                 lhs_array.put(objj);
 
+            }else if(arrayObject instanceof NotDescr){
+                NotDescr not_first = (NotDescr) and_array.get( j );
+                List<? extends BaseDescr> lhs_constraint = not_first.getDescrs();
+
+                String lhs_identifier = "";
+                String new_lhs_obj = "";
+                if (lhs_constraint.size() > 0) {
+
+                    for (int q = 0; q < lhs_constraint.size(); q++) {
+                        PatternDescr col = (PatternDescr) not_first.getDescrs().get(q);
+                        lhs_identifier = col.getIdentifier();
+                        String lhs_objtype = col.getObjectType();
+                        AndDescr lhs_const = (AndDescr) col.getConstraint();
+
+                        String lhs_const_or_val = lhs_const.getDescrs().get(0).getText();
+                        new_lhs_obj += lhs_objtype + "(" + lhs_const_or_val + ") or ";
+                    }
+
+                }
+                if (lhs_identifier == null){
+                    lhs_identifier="";
+                }
+                String last_new_lhs_obj = "not " + new_lhs_obj.substring(0, new_lhs_obj.lastIndexOf(" ")-3);
+                objj.put("id", lhs_identifier);
+                objj.put("objType", last_new_lhs_obj);
+                if(lhs_identifier == null || lhs_identifier==""){
+                    objj.put("lhsFull", last_new_lhs_obj);
+                }else{
+                    objj.put("lhsFull", lhs_identifier + ":" + last_new_lhs_obj);
+                }
+                lhs_array.put(objj);
+
             }else{
                 String lhs_identifier = null;
                 String lhs_objtype = "eval";
+
                 String lhs_const_val = (String) ((EvalDescr) arrayObject).getContent();
 
                 objj.put("id", lhs_identifier);
@@ -338,23 +377,23 @@ public class MMRestService {
                         out.write(new_rule);
                         out.close();
 
-                        File dest = new File("/Users/kunarath/Projects/sead2/standalone-mm/src/main/resources/rules/ruleset1.drl");
+                        //File dest = new File("/Users/kunarath/Projects/sead2/standalone-mm/src/main/resources/rules/ruleset1.drl");
 
                         InputStream inStream = null;
-                        OutputStream outStream = null;
+                        //OutputStream outStream = null;
 
                         inStream = new FileInputStream(file);
-                        outStream = new FileOutputStream(dest);
+                        //outStream = new FileOutputStream(dest);
 
                         byte[] buffer = new byte[1024];
                         int length;
                         //copy the file content in bytes
-                        while ((length = inStream.read(buffer)) > 0){
-                            outStream.write(buffer, 0, length);
-                        }
+                        //while ((length = inStream.read(buffer)) > 0){
+                        //    outStream.write(buffer, 0, length);
+                        //}
 
                         inStream.close();
-                        outStream.close();
+                        //outStream.close();
 
                         KieContainer kContainer = KieServices.Factory.get().getKieClasspathContainer();
                         KieSession kSession = kContainer.newKieSession("ksession-rules");
@@ -408,22 +447,22 @@ public class MMRestService {
                         out.write(content);
                         out.close();
 
-                        File dest = new File("/Users/kunarath/Projects/sead2/standalone-mm/src/main/resources/rules/ruleset1.drl");
+                        //File dest = new File("/Users/kunarath/Projects/sead2/standalone-mm/src/main/resources/rules/ruleset1.drl");
                         InputStream inStream = null;
-                        OutputStream outStream = null;
+                        //OutputStream outStream = null;
 
                         inStream = new FileInputStream(file);
-                        outStream = new FileOutputStream(dest);
+                        //outStream = new FileOutputStream(dest);
 
                         byte[] buffer = new byte[1024];
                         int length;
                         //copy the file content in bytes
-                        while ((length = inStream.read(buffer)) > 0){
-                            outStream.write(buffer, 0, length);
-                        }
+                        //while ((length = inStream.read(buffer)) > 0){
+                        //    outStream.write(buffer, 0, length);
+                        //}
 
                         inStream.close();
-                        outStream.close();
+                        //outStream.close();
                         }
                     }
                 }
