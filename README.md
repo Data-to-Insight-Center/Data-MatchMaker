@@ -11,17 +11,19 @@ Configuration and Installation (As a Web Application)
 ~~~
 git clone https://github.com/Data-to-Insight-Center/SA-Matchmaker.git
 ~~~
-2) Add Research Object, Repository and People profile templates to the source 
+2) Add Research Object, Repository and People profile templates to the source
 ~~~
 SA-Matchmaker/src/main/resources/edu/indiana/d2i/matchmaker/profile
 ~~~
 Sample profiles templates are already available in the source at https://github.com/Data-to-Insight-Center/SA-Matchmaker/tree/master/src/main/resources/edu/indiana/d2i/matchmaker/profile
+~~~
+You can modify define your own profile templates according to your application. Matchmaker will use these templates as a schema at runtime and will expect runtime profiles to be compatible with this schema.
 </br>
 </br>
 3) Build the module
 ~~~
 cd SA-Matchmaker
-mvn clean install -DskipTests=true
+mvn clean install -DskipTests
 ~~~
 4) Copy the .war file to tomcat/webapps folder
 ~~~
@@ -34,14 +36,14 @@ unzip CATALINA_HOME/webapps/mm.war -d CATALINA_HOME/webapps/mm
 6) Configure Matchmaker to retrieve people and repository profiles</br></br>
 This can be done in two ways;</br></br>
 1. Enable Matchmaker to retrieve profiles from a directory</br>
-Copy the Repositories and People profiles to mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/profile/ directory
+Copy the Repositories and People profiles to mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/profile/ directory. These are runtime profiles and those should be compatible with the templates added in Step 2. You can override the template files in the 'profile' directory if needed at this stage.
 ~~~
 cp repositories.json person.json CATALINA_HOME/webapps/mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/profile/
 ~~~
 Set parameters in mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/util/matchmaker.properties configuration file to retrieve People and Repository profiles from a directory
 ~~~
+cached.profile.repositories=../profile/repositories.json
 cached.profile.person=../profile/person.json
-repo.properties.path=../util/repo.properties
 ~~~
 </br>
 2. Enable Matchmaker to retrieve profiles from an external REST API</br>
