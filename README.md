@@ -50,7 +50,7 @@ This can be done in two ways;
 
 2. Enable Matchmaker to retrieve profiles from an external REST API
 
-   Set parameters in mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/util/matchmaker.properties configuration file to retrieve People and Repository profiles from an external REST API
+   Set parameters in mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/util/matchmaker.properties configuration file to retrieve People and Repository profiles from an external REST API. Make sure you set "cached.profile.repositories" and "cached.profile.person" properties to empty values as we don't read profiles from local file system.
    ~~~
    repo.list.rest.url=http://localhost:8082/sead-pdt/repositories
    repo.profile.rest.url=http://localhost:8082/sead-pdt/repositories
@@ -72,7 +72,7 @@ This can be done in two ways;
 
 Use matchmaker - REST API
 -----------------
-1) Configure and install Matchmaker as a web application
+1) Configure and install Matchmaker as a web application by following the above steps.
 
 2) Send a POST request to http://&lt;host&gt;:&lt;port&gt;/mm/mm/rest with the following request as the POST body
 ~~~
@@ -197,10 +197,10 @@ The result would be;
 
 Use matchmaker - Command Line Interface
 -----------------
-Documentation on Command line executin of the Matchmaker is available at https://github.com/Data-to-Insight-Center/SA-Matchmaker/tree/master/samples. 
+Documentation on command line executin of the Matchmaker is available at https://github.com/Data-to-Insight-Center/SA-Matchmaker/tree/master/samples. 
 
 Use matchmaker - Web UI
 -----------------
-1) Configure and install Matchmaker as a web application
+1) Configure and install Matchmaker as a web application by following the above steps.
 
 2) Web UI of the Matchmaker is available at http://&lt;host&gt;:&lt;port&gt;/mm/crud-table.html. There you can view the rules, edit rules and send requests with Research Object profiles to get matched repositories. 
