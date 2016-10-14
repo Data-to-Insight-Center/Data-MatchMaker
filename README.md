@@ -17,7 +17,7 @@ SA-Matchmaker/src/main/resources/edu/indiana/d2i/matchmaker/profile
 ~~~
 Sample profiles templates are already available in the source at https://github.com/Data-to-Insight-Center/SA-Matchmaker/tree/master/src/main/resources/edu/indiana/d2i/matchmaker/profile
 ~~~
-You can modify define your own profile templates according to your application. Matchmaker will use these templates as a schema at runtime and will expect runtime profiles to be compatible with this schema
+You can define your own profile templates according to your application. Matchmaker will use these templates as a schema at runtime and will expect runtime profiles to be compatible with this schema
 ~~~
 3) Build the module
 ~~~
