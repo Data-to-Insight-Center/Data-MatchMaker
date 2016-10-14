@@ -16,9 +16,9 @@ git clone https://github.com/Data-to-Insight-Center/SA-Matchmaker.git
 SA-Matchmaker/src/main/resources/edu/indiana/d2i/matchmaker/profile
 ~~~
 Sample profiles templates are already available in the source at https://github.com/Data-to-Insight-Center/SA-Matchmaker/tree/master/src/main/resources/edu/indiana/d2i/matchmaker/profile
-~~~
-You can define your own profile templates according to your application. Matchmaker will use these templates as a schema at runtime and will expect runtime profiles to be compatible with this schema
-~~~
+
+You can define your own profile templates according to your application. Matchmaker will use these templates as a schema at runtime and will expect runtime profiles to be compatible with this schema.
+
 3) Build the module
 ~~~
 cd SA-Matchmaker
@@ -32,44 +32,48 @@ cp target/matchmaker-1.0.0.war CATALINA_HOME/webapps/mm.war
 ~~~
 unzip CATALINA_HOME/webapps/mm.war -d CATALINA_HOME/webapps/mm
 ~~~
-6) Configure Matchmaker to retrieve people and repository profiles</br></br>
-This can be done in two ways;</br></br>
-1. Enable Matchmaker to retrieve profiles from a directory</br>
-Copy the Repositories and People profiles to mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/profile/ directory. These are runtime profiles and those should be compatible with the templates added in Step 2. You can override the template files in the 'profile' directory if needed at this stage.
-~~~
-cp repositories.json person.json CATALINA_HOME/webapps/mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/profile/
-~~~
-Set parameters in mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/util/matchmaker.properties configuration file to retrieve People and Repository profiles from a directory
-~~~
-cached.profile.repositories=../profile/repositories.json
-cached.profile.person=../profile/person.json
-~~~
-</br>
-2. Enable Matchmaker to retrieve profiles from an external REST API</br>
-Set parameters in mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/util/matchmaker.properties configuration file to retrieve People and Repository profiles from an external REST API
-~~~
-repo.list.rest.url=http://localhost:8082/sead-pdt/repositories
-repo.profile.rest.url=http://localhost:8082/sead-pdt/repositories
-repo.identifier=orgidentifier
-people.list.rest.url=http://localhost:8082/sead-pdt/people/list
-people.profile.rest.url=http://localhost:8082/sead-pdt/people
-people.identifier=@id
-~~~
-'repo.list.rest.url' should list the repository profiles as a list of json objects and each json object should have the 'repo.identifier' field which can be used to get full profile information for each repository by appending that identifier to the 'repo.profile.rest.url'.</br>
-Similarly 'people.list.rest.url' should list the people profiles as a list of json objects and each json object should have the 'people.identifier' field which can be used to get full profile information for each person by appending that identifier to the 'people.profile.rest.url'.</br>
+6) Configure Matchmaker to retrieve people and repository profiles
 
-Please see the following documentation for more details about these REST endpoints;</br>
-~~~
-https://github.com/Data-to-Insight-Center/PDT/wiki/Repository-Service
-https://github.com/Data-to-Insight-Center/PDT/wiki/People-Service
-~~~
+This can be done in two ways;
+
+1. Enable Matchmaker to retrieve profiles from a directory
+
+   Copy the Repositories and People profiles to mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/profile/ directory. These are runtime profiles and those should be compatible with the templates added in Step 2. You can override the template files in the 'profile' directory if needed at this stage.
+   ~~~
+   cp repositories.json person.json CATALINA_HOME/webapps/mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/profile/
+   ~~~
+   Set parameters in mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/util/matchmaker.properties configuration file to retrieve People and Repository profiles from a directory
+   ~~~
+   cached.profile.repositories=../profile/repositories.json
+   cached.profile.person=../profile/person.json
+   ~~~
+
+2. Enable Matchmaker to retrieve profiles from an external REST API
+
+   Set parameters in mm/WEB-INF/classes/edu/indiana/d2i/matchmaker/util/matchmaker.properties configuration file to retrieve People and Repository profiles from an external REST API
+   ~~~
+   repo.list.rest.url=http://localhost:8082/sead-pdt/repositories
+   repo.profile.rest.url=http://localhost:8082/sead-pdt/repositories
+   repo.identifier=orgidentifier
+   people.list.rest.url=http://localhost:8082/sead-pdt/people/list
+   people.profile.rest.url=http://localhost:8082/sead-pdt/people
+   people.identifier=@id
+   ~~~
+   'repo.list.rest.url' should list the repository profiles as a list of json objects and each json object should have the 'repo.identifier' field which can be used to get full profile information for each repository by appending that identifier to the 'repo.profile.rest.url'.
+   Similarly 'people.list.rest.url' should list the people profiles as a list of json objects and each json object should have the 'people.identifier' field which can be used to get full profile information for each person by appending that identifier to the 'people.profile.rest.url'.
+
+   Please see the following documentation for more details about these REST endpoints;</br>
+   ~~~
+   https://github.com/Data-to-Insight-Center/PDT/wiki/Repository-Service
+   https://github.com/Data-to-Insight-Center/PDT/wiki/People-Service
+   ~~~
 
 7) Start tomcat
 
 Use matchmaker - REST API
 -----------------
 1) Configure and install Matchmaker as a web application
-</br></br>
+
 2) Send a POST request to http://&lt;host&gt;:&lt;port&gt;/mm/mm/rest with the following request as the POST body
 ~~~
 {
@@ -194,13 +198,9 @@ The result would be;
 Use matchmaker - Command Line Interface
 -----------------
 Documentation on Command line executin of the Matchmaker is available at https://github.com/Data-to-Insight-Center/SA-Matchmaker/tree/master/samples. 
-</br>
 
 Use matchmaker - Web UI
 -----------------
 1) Configure and install Matchmaker as a web application
-</br></br>
-2) Web UI of the Matchmaker is available at http://&lt;host&gt;:&lt;port&gt;/mm/crud-table.html. There you can view the rules, edit rules and send requests with Research Object profiles to get matched repositories. 
-</br>
-</br>
 
+2) Web UI of the Matchmaker is available at http://&lt;host&gt;:&lt;port&gt;/mm/crud-table.html. There you can view the rules, edit rules and send requests with Research Object profiles to get matched repositories. 
