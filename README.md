@@ -1,5 +1,8 @@
 Data MatchMaker
 ================
+
+See Wiki for description of the tool and a video showing its use.   Data MatchMaker is a product of the NSF funded  Sustainable Environments Actionable Data (SEAD) project under grant #OCI0940824.  Data MatchMaker is available as open source under an Apache 2.0 license.  Data MatchMaker is an improved and new version of the Matchmaker functionality available at 
+
 Pre-requisits
 -----------------
 Tomcat version 6 or above</br>
